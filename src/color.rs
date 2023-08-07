@@ -24,7 +24,7 @@ pub static TRANSPARENT_SHIFT: u32 = {
 
 #[inline]
 pub const fn color(r: u8, g: u8, b: u8, a: u8) -> u32 {
-    u32::from_le_bytes([b, g, r, a])
+    u32::from_le_bytes([r, g, b, a])
 }
 
 // #[cfg(target_endian = "little")]
@@ -98,6 +98,7 @@ pub fn copy_block_buffer(
     let mut buffer_offset = 0;
 
     for y in y_0..y_0 + copy_height {
+        let y = h - 1 - y;
         let image_offset = y * w + x;
         image[image_offset..image_offset + copy_width]
             .copy_from_slice(&buffer[buffer_offset..buffer_offset + copy_width]);
